@@ -1,0 +1,9 @@
+type Link = { title: string; url: string };
+type Props = { logo: { url?: string; src: string; alt?: string }; address: { label: string; value: string }; contact: { label: string; phone: string; email: string }; columnLinks: { links: Link[] }[]; footerText?: string; footerLinks: Link[] };
+export type Footer3Props = React.ComponentPropsWithoutRef<"footer"> & Partial<Props>;
+
+export function Footer3(props: Footer3Props) {
+  const { logo, address, contact, columnLinks, footerText, footerLinks } = { ...Footer3Defaults, ...props };
+  return <footer className="site-footer px-[5%] py-12 md:py-18 lg:py-20"><div className="container"><div className="grid grid-cols-1 gap-x-[4vw] gap-y-12 pb-12 lg:grid-cols-[1fr_0.5fr] lg:pb-20"><div><a href={logo.url}><img src={logo.src} alt={logo.alt} className="footer-logo mb-8" /></a><div className="mb-7"><p className="text-small mb-1 font-semibold">{address.label}</p><p className="text-small max-w-sm">{address.value}</p></div><div><p className="text-small mb-1 font-semibold">{contact.label}</p><p className="text-small flex flex-col"><a href={`tel:${contact.phone}`}>{contact.phone}</a><a href={`mailto:${contact.email}`}>{contact.email}</a></p></div></div><div className="grid grid-cols-2 gap-x-8">{columnLinks.map((column, i) => <ul key={i}>{column.links.map((link) => <li key={link.title} className="text-small py-2 font-semibold"><a href={link.url}>{link.title}</a></li>)}</ul>)}</div></div><div className="h-px w-full bg-scheme-border" /><div className="text-small flex flex-col-reverse justify-between gap-5 pt-7 md:flex-row"><p>{footerText}</p><ul className="flex gap-6">{footerLinks.map((link) => <li key={link.title}><a href={link.url}>{link.title}</a></li>)}</ul></div></div></footer>;
+}
+export const Footer3Defaults: Props = { logo: { src: "" }, address: { label: "", value: "" }, contact: { label: "", phone: "", email: "" }, columnLinks: [], footerLinks: [] };
